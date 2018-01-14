@@ -8,12 +8,13 @@
 		<div>
 			<at-table :columns="columnsName" :data="articleList"></at-table>
 			<at-pagination class="page-pulg-in" :total="totalCount" :current="pageNum"
-				></at-pagination>
+				@page-change="pageChange"></at-pagination>
 		</div>
 	</div>
 </template>
 
 <script>
+	
 	export default {
 		name: 'app-draft',
 		data() {
@@ -88,11 +89,21 @@
 		mounted: function() {
 			this.$nextTick(function() {
 				/* 请求ArticleList */
+				this.getArticleList()
 			})
 		},
 		methods: {
+			getArticleList() {
+				this.$http.get('http://jsonplaceholder.typicode.com/users').then((data) => {
+					console.log(data.body)
+				})
+			},
 			searchArticle(searchArticle) {
 				console.log(searchArticle)
+			},
+			pageChange(data) {
+				/* 页码更换 发送请求 请求新数据 */
+				console.log(data)
 			},
 			makePageData() {
 				/* 请求数据 */
